@@ -4,13 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.apiactivity.adapter.CommentsAdapter;
-import com.example.apiactivity.model.Albums;
 import com.example.apiactivity.model.Comments;
-import com.example.apiactivity.model.Posts;
-import com.example.apiactivity.model.Todos;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +77,8 @@ public class ListsActivity extends AppCompatActivity
       LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
       recycler.setLayoutManager(linearLayoutManager);
 
-      CommentsAdapter commentsAdapter = new CommentsAdapter(comments, R.layout.activity_detalhes);
+      CommentsAdapter commentsAdapter = new CommentsAdapter(comments, 0);
+      recycler.setAdapter(commentsAdapter);
 
       } catch (JSONException e) {
         Log.e("JSONException",e.getMessage());
