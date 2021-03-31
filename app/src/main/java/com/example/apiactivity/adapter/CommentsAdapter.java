@@ -19,6 +19,7 @@ import java.util.List;
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentsViewHolder> {
 
   private List<Comments> listaComments;
+  private TextView tv;
   private int layout;
 
   public class CommentsViewHolder extends RecyclerView.ViewHolder {
@@ -31,10 +32,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
   public CommentsAdapter(List<Comments> comments, int layout) {
     this.listaComments = comments;
-    this.layout = layout;
-    if (this.layout == 0) {
-      this.layout = R.layout.layout_user;
-    }
+    this.layout =  R.layout.layout_lista;
   }
 
   @NonNull
@@ -47,39 +45,22 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
   @Override
   public void onBindViewHolder(@NonNull CommentsViewHolder holder, int position) {
     Comments obj = (Comments) this.listaComments.get(position);
-    TextView tv;
-
-    if (this.layout != R.layout.layout_user) {
-      tv = holder.viewComments.findViewById(R.id.postId);
-      tv.setText(obj.getPostId());
-      tv = holder.viewComments.findViewById(R.id.id);
-      tv.setText(obj.getId());
-      tv = holder.viewComments.findViewById(R.id.idName);
-      tv.setText(obj.getName());
-      tv = holder.viewComments.findViewById(R.id.email);
-      tv.setText(obj.getEmail());
-      tv = holder.viewComments.findViewById(R.id.body);
-      tv.setText(obj.getBody());
-    }
-    if (layout == R.layout.layout_user) {
-      CardView bt = holder.viewComments.findViewById(R.id.cardUser);
-      tv = holder.viewComments.findViewById(R.id.idName);
-      tv.setText(obj.getName());
-      bt.setTag(obj);
-      bt.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          CardView btn = (CardView) v;
-          Comments comments = (Comments) btn.getTag();
-          Intent intent = new Intent(holder.viewComments.getContext(), DetalhesActivity.class);
-          intent.putExtra("objTp", obj);
-          holder.viewComments.getContext().startActivity(intent);
-        }
-      });
-    }
+    CardView bt = holder.viewComments.findViewById(R.id.cardUser);
+    tv = holder.viewComments.findViewById(R.id.name);
+    tv.setText(obj.getId() + " - " + obj.getName());
+    bt.setTag(obj);
+    bt.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        CardView btn = (CardView) v;
+        Comments comments = (Comments) btn.getTag();
+        Intent intent = new Intent(holder.viewComments.getContext(), DetalhesActivity.class);
+        intent.putExtra("objTp", obj);
+        holder.viewComments.getContext().startActivity(intent);
+      }
+    });
 
   }
-
 
   @Override
   public int getItemCount() {

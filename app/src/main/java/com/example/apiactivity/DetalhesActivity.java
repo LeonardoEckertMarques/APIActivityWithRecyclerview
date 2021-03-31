@@ -17,15 +17,15 @@ public class DetalhesActivity extends AppCompatActivity {
     setContentView(R.layout.activity_detalhes);
 
     Comments comments = getIntent().getParcelableExtra("objTp");
-    bindComments(comments);
+    bind(comments);
   }
 
-  private void bindComments(Comments obj) {
+  private void bind(Comments obj) {
     tv = findViewById(R.id.postId);
     tv.setText("PostID: "+obj.getPostId()+"");
     tv = findViewById(R.id.id);
     tv.setText("ID: "+obj.getId()+"");
-    tv = findViewById(R.id.idName);
+    tv = findViewById(R.id.name);
     tv.setText("Name: "+obj.getName()+"");
     tv = findViewById(R.id.email);
     tv.setText("Email: "+obj.getEmail()+"");

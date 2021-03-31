@@ -1,6 +1,7 @@
 package com.example.apiactivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +31,6 @@ public class ListsActivity extends AppCompatActivity
         Response.ErrorListener {
 
   List<Comments> comments = new ArrayList<>();
-
   private TextView tipo;
   private String op;
 
@@ -49,8 +49,6 @@ public class ListsActivity extends AppCompatActivity
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 this, this);
         queue.add(jsonArrayRequest);
-        break;
-      default:
         break;
     }
 
@@ -74,13 +72,13 @@ public class ListsActivity extends AppCompatActivity
       Toast.makeText(this,"Recebido: " + comments.size() + " comments",Toast.LENGTH_LONG).show();
 
       RecyclerView recycler = findViewById(R.id.recycler);
-      LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-      recycler.setLayoutManager(linearLayoutManager);
+      GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+      recycler.setLayoutManager(gridLayoutManager);
 
-      CommentsAdapter commentsAdapter = new CommentsAdapter(comments, 0);
+      CommentsAdapter commentsAdapter = new CommentsAdapter(comments, R.layout.layout_lista);
       recycler.setAdapter(commentsAdapter);
 
-      } catch (JSONException e) {
+    } catch (JSONException e) {
         Log.e("JSONException",e.getMessage());
         e.printStackTrace();
     }
