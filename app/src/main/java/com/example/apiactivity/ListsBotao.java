@@ -14,16 +14,26 @@ public class ListsBotao extends AppCompatActivity implements View.OnClickListene
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_lista_botoes);
     Button comments = findViewById(R.id.comments);
+    Button posts = findViewById(R.id.posts);
+    Button albums = findViewById(R.id.albums);
+    posts.setOnClickListener(this);
+    albums.setOnClickListener(this);
     comments.setOnClickListener(this);
   }
 
-  // NO EXÉRCICÍO ANTERIOR EU NÃO ACABEI REALIZANDO UM SWITCH PERCORRENDO OS BOTÕES....
-  // MAS ESTÁ AÍ AGORA....
   public void onClick(View view) {
     Intent intent = new Intent(ListsBotao.this, ListsActivity.class);
     switch (view.getId()) {
       case R.id.comments:
         intent.putExtra("op", "comments");
+        startActivity(intent);
+        break;
+      case R.id.posts:
+        intent.putExtra("op", "posts");
+        startActivity(intent);
+        break;
+      case R.id.albums:
+        intent.putExtra("op", "albums");
         startActivity(intent);
         break;
     }

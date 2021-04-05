@@ -46,7 +46,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
   public void onBindViewHolder(@NonNull CommentsViewHolder holder, int position) {
     Comments obj = (Comments) this.listaComments.get(position);
     CardView bt = holder.viewComments.findViewById(R.id.cardUser);
-    tv = holder.viewComments.findViewById(R.id.name);
+    tv = holder.viewComments.findViewById(R.id.link);
     tv.setText(obj.getId() + " - " + obj.getName());
     bt.setTag(obj);
     bt.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +55,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         CardView btn = (CardView) v;
         Comments comments = (Comments) btn.getTag();
         Intent intent = new Intent(holder.viewComments.getContext(), DetalhesActivity.class);
+        intent.putExtra("op", "comments");
         intent.putExtra("objTp", obj);
         holder.viewComments.getContext().startActivity(intent);
       }

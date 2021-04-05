@@ -16,8 +16,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.apiactivity.adapter.AlbumsAdapter;
 import com.example.apiactivity.adapter.CommentsAdapter;
+import com.example.apiactivity.adapter.PostsAdapter;
+import com.example.apiactivity.model.Albums;
 import com.example.apiactivity.model.Comments;
+import com.example.apiactivity.model.Posts;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +34,10 @@ public class ListsActivity extends AppCompatActivity
         implements Response.Listener<JSONArray>,
         Response.ErrorListener {
 
+  List<Posts> posts =  new ArrayList<>();
+  List<Albums> albums =  new ArrayList<>();
   List<Comments> comments = new ArrayList<>();
+
   private TextView tipo;
   private String op;
 
@@ -42,6 +49,8 @@ public class ListsActivity extends AppCompatActivity
     op = getIntent().getStringExtra("op");
 
     switch (op) {
+      case "posts":
+      case "albums":
       case "comments":
         tipo.setText("Lista Selecionada: \n" +op.toUpperCase());
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -50,6 +59,7 @@ public class ListsActivity extends AppCompatActivity
                 this, this);
         queue.add(jsonArrayRequest);
         break;
+      default: break;
     }
 
   }
@@ -58,25 +68,71 @@ public class ListsActivity extends AppCompatActivity
   public void onResponse(JSONArray response) {
 
     try {
-      for(int i = 0; i < response.length(); i++) {
-        JSONObject json = response.getJSONObject(i);
-        Comments obj = new Comments(
-                json.getInt("postId"),
-                json.getInt("id"),
-                json.getString("name"),
-                json.getString("email"),
-                json.getString("body"));
-        comments.add(obj);
-      }
-
-      Toast.makeText(this,"Recebido: " + comments.size() + " comments",Toast.LENGTH_LONG).show();
 
       RecyclerView recycler = findViewById(R.id.recycler);
-      GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-      recycler.setLayoutManager(gridLayoutManager);
 
-      CommentsAdapter commentsAdapter = new CommentsAdapter(comments, R.layout.layout_lista);
-      recycler.setAdapter(commentsAdapter);
+      switch (op) {
+        case "comments":
+          for(int i = 0; i < response.length(); i++) {
+            JSONObject json = response.getJSONObject(i);
+            Comments obj = new Comments(
+                    json.getInt("postId"),
+                    json.getInt("id"),
+                    json.getString("name"),
+                    json.getString("email"),
+                    json.getString("body"));
+            comments.add(obj);
+          }
+
+          Toast.makeText(this,"Recebido: " + comments.size() + " comments",Toast.LENGTH_LONG).show();
+
+          GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
+          recycler.setLayoutManager(gridLayoutManager);
+
+          CommentsAdapter commentsAdapter = new CommentsAdapter(comments, R.layout.layout_lista);
+          recycler.setAdapter(commentsAdapter);
+          break;
+        case "albums":
+          for(int i = 0; i < response.length(); i++) {
+            JSONObject json = response.getJSONObject(i);
+            Albums obj = new Albums(
+                    json.getInt("userId"),
+                    json.getInt("id"),
+                    json.getString("title"));
+            albums.add(obj);
+          }
+
+          Toast.makeText(this,"Recebido: " + albums.size() + " albums",Toast.LENGTH_LONG).show();
+
+          GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 3);
+          recycler.setLayoutManager(gridLayoutManager1);
+
+          AlbumsAdapter albumsAdapter = new AlbumsAdapter(albums, R.layout.layout_lista);
+          recycler.setAdapter(albumsAdapter);
+          break;
+
+        case "posts":
+          for(int i = 0; i < response.length(); i++) {
+            JSONObject json = response.getJSONObject(i);
+            Posts obj = new Posts(
+                    json.getInt("userId"),
+                    json.getInt("id"),
+                    json.getString("title"),
+                    json.getString("body"));
+            posts.add(obj);
+          }
+
+          Toast.makeText(this,"Recebido: " + posts.size() + " posts",Toast.LENGTH_LONG).show();
+
+          GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
+          recycler.setLayoutManager(gridLayoutManager2);
+
+          PostsAdapter postsAdapter = new PostsAdapter(posts, R.layout.layout_lista);
+          recycler.setAdapter(postsAdapter);
+          break;
+
+        default: break;
+      }
 
     } catch (JSONException e) {
         Log.e("JSONException",e.getMessage());
