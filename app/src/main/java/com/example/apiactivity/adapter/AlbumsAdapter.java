@@ -32,7 +32,7 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumsView
 
     public AlbumsAdapter(List<Albums> albums, int layout) {
         this.albumsList = albums;
-        this.layout =  R.layout.layout_lista;
+        if (this.layout == 0) this.layout =  R.layout.layout_lista;
     }
 
     @NonNull

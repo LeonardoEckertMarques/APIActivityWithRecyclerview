@@ -89,7 +89,7 @@ public class ListsActivity extends AppCompatActivity
           GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
           recycler.setLayoutManager(gridLayoutManager);
 
-          CommentsAdapter commentsAdapter = new CommentsAdapter(comments, R.layout.layout_lista);
+          CommentsAdapter commentsAdapter = new CommentsAdapter(comments, 0);
           recycler.setAdapter(commentsAdapter);
           break;
         case "albums":
@@ -107,7 +107,7 @@ public class ListsActivity extends AppCompatActivity
           GridLayoutManager gridLayoutManager1 = new GridLayoutManager(this, 3);
           recycler.setLayoutManager(gridLayoutManager1);
 
-          AlbumsAdapter albumsAdapter = new AlbumsAdapter(albums, R.layout.layout_lista);
+          AlbumsAdapter albumsAdapter = new AlbumsAdapter(albums, 0);
           recycler.setAdapter(albumsAdapter);
           break;
 
@@ -124,10 +124,10 @@ public class ListsActivity extends AppCompatActivity
 
           Toast.makeText(this,"Recebido: " + posts.size() + " posts",Toast.LENGTH_LONG).show();
 
-          GridLayoutManager gridLayoutManager2 = new GridLayoutManager(this, 3);
-          recycler.setLayoutManager(gridLayoutManager2);
+          LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+          recycler.setLayoutManager(linearLayoutManager);
 
-          PostsAdapter postsAdapter = new PostsAdapter(posts, R.layout.layout_lista);
+          PostsAdapter postsAdapter = new PostsAdapter(posts, 0);
           recycler.setAdapter(postsAdapter);
           break;
 

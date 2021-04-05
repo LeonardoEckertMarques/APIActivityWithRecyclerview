@@ -32,7 +32,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
 
     public PostsAdapter(List<Posts> posts, int layout) {
         this.postsList = posts;
-        this.layout =  R.layout.layout_lista;
+        if (this.layout == 0) this.layout =  R.layout.layout_lista;
     }
 
     @NonNull

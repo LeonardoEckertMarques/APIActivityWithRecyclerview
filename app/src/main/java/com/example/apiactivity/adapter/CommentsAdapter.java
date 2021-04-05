@@ -32,7 +32,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
   public CommentsAdapter(List<Comments> comments, int layout) {
     this.listaComments = comments;
-    this.layout =  R.layout.layout_lista;
+    if (this.layout == 0) this.layout =  R.layout.layout_lista;
   }
 
   @NonNull
